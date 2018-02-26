@@ -12,31 +12,37 @@ labels = []
 for dir in dirs:
 	files = os.listdir(dir)
 	for f in files:	
-		print(f)
-		fi = open(dir+f,'r')
-		lines = fi.readlines()
-		fi.close()
-		counter = 0
-		features = []
-		li = 20
+		if not f.startswith('.') and os.path.isfile(os.path.join(dir,f)):
+
+
+			fi = open(dir+f,'r')
+			print(f)
+			lines = fi.readlines()
+			fi.close()
+			counter = 0
+			li = 1
 #Read from line 20 to the next 15556  lines from the data and append it to the features vector
-		while counter != 15556:
-			try:
-        			features.append(lines[li].split()[5])
-        			features.append(lines[li].split()[7])
-        			features.append(lines[li].split()[11])
-        			features.append(lines[li].split()[12])
-        			features.append(lines[li].split()[13])
-        			features.append(lines[li].split()[14])
-        			features.append(lines[li].split()[26])
-        			features.append(lines[li].split()[31])
-        			features.append(lines[li].split()[32])
-        			li = li+1
-				counter = counter +1
-			except:
-				print('error with dir' +str(dir)+ 'and file '+ str(fi))
-		check.append(features)
-		labels.append(dict1[dir])
+			while li < len(lines):
+				try:
+					features = []
+        				features.append(lines[li].split()[5])
+        				features.append(lines[li].split()[7])
+        				features.append(lines[li].split()[11])
+        				features.append(lines[li].split()[12])
+       		 			features.append(lines[li].split()[13])
+        				features.append(lines[li].split()[14])
+        				features.append(lines[li].split()[26])
+       		 			features.append(lines[li].split()[31])
+        				features.append(lines[li].split()[32])
+					features.append(dict1[dir])
+					check.append(features)
+
+					li = li+1 
+
+				except:
+					print('error with dir' +str(dir)+ 'and file '+ str(fi))
+
+			print('finished reading ' + f)
 
 
 feature_array= np.asarray(check)
@@ -46,8 +52,13 @@ for c in check:
 	fwrite.write(c)
 	fwrite.flush()
 '''
-print(len(check))
-print(feature_array)
-print(len(labels))
-print(labels)
+
+
+
+fwrite = open('features.npy','w')
+np.save(fwrite,feature_array)
+print(check)
+
+
+
 
