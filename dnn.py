@@ -23,5 +23,5 @@ dnn.fit(X_train, y_train, n_epochs=100)
 
 #Finding the accuracy of the model
 distraction_prediction = dnn.predict(X_test)
-print("Score on test set: {:.2f}%".format(accuracy_score(y_test, distraction_predictions) * 100))
+print("Score on test set: {:.2f}%".format(accuracy_score(y_test, distraction_prediction) * 100))
 
